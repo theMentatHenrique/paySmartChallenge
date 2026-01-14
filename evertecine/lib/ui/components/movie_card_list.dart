@@ -1,7 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MovieCardList extends StatelessWidget{
+import '../../domain/model/Movie.dart';
+
+class MovieCardList extends StatelessWidget {
+  final Movie movie;
+  static final _IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+
+  MovieCardList({required this.movie});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -20,7 +27,7 @@ class MovieCardList extends StatelessWidget{
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  "",
+                  _IMAGE_URL + movie.posterImage,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
                 )
@@ -34,14 +41,20 @@ class MovieCardList extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'title',
+                    movie.name,
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'subtitle',
+                    movie.genreIds[1].toString(),
+                    style: TextStyle(color: Colors.grey[600]),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    movie.releaseDate,
                     style: TextStyle(color: Colors.grey[600]),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -49,8 +62,6 @@ class MovieCardList extends StatelessWidget{
                 ],
               ),
             )
-
-
           ],
         ),
         color: Colors.red,

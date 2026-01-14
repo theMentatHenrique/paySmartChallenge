@@ -1,3 +1,4 @@
+import 'package:evertecine/domain/model/Movie.dart';
 import 'package:evertecine/ui/components/movie_card_list.dart';
 import 'package:evertecine/ui/viewModel/HomeViewModel.dart';
 import 'package:flutter/material.dart';
@@ -9,26 +10,25 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<Homeviewmodel>();
-
     return Scaffold(
-      body: Center(
-        child: movieList(context),
-      ),
+      body: content(context, viewModel),
     );
   }
 }
 
 
+Widget content(BuildContext context, Homeviewmodel vm) {
+  return vm.isLoadingData()
+      ? Center(child: CircularProgressIndicator())
+      : movieList(context, vm.getMovieList() );
+}
 
-final List<String> entries = <String>['A', 'B', 'C'];
-final List<int> colorCodes = <int>[600, 500, 100];
-
-Widget movieList(BuildContext context) {
+Widget movieList(BuildContext context, List<Movie> movies) {
   return ListView.separated(
     padding: const EdgeInsets.all(8),
-    itemCount: entries.length,
+    itemCount: movies.length,
     itemBuilder: (BuildContext context, int index) {
-      return MovieCardList();
+      return MovieCardList(movie: movies[index]);
     },
     separatorBuilder: (BuildContext context, int index) => const Divider(),
   );

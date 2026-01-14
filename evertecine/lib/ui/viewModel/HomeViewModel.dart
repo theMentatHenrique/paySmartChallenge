@@ -3,7 +3,7 @@ import 'package:evertecine/domain/repository/CatalogRepository.dart';
 import 'package:flutter/cupertino.dart';
 
 class Homeviewmodel extends ChangeNotifier{
-  final CatalogRepository repository;
+  final UpcomingMoviesRepository repository;
   bool _isLoading = false;
   String? _errorMessage;
   List<Movie> _movies = [];
@@ -16,7 +16,6 @@ class Homeviewmodel extends ChangeNotifier{
     _errorMessage = null;
 
   }
-
 
   _updateLoading(bool value) {
     _isLoading = value;

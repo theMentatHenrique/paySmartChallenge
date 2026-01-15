@@ -1,6 +1,5 @@
-import 'package:evertecine/domain/repository/CatalogRepository.dart';
 import 'package:evertecine/network/service/MovieService.dart';
-import 'package:evertecine/ui/screen/homeScreen.dart';
+import 'package:evertecine/ui/screen/home/homeScreen.dart';
 import 'package:evertecine/ui/viewModel/HomeViewModel.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +11,7 @@ class AppRouter {
       GoRoute(
         path: '/',
         builder: (context, state) => ChangeNotifierProvider(
-          create: (_) => Homeviewmodel(repository: new MoviesRepository())..loadUpcomingMovies(),
+          create: (_) => Homeviewmodel(repository: MoviesRepository())..loadUpcomingMovies(),
           child: const HomeScreen(),
         ),
       ),

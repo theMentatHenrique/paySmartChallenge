@@ -1,47 +1,38 @@
 import 'package:evertecine/domain/model/Movie.dart';
 import 'package:evertecine/domain/repository/CatalogRepository.dart';
 import 'package:evertecine/network/core/BaseNetworkResponse.dart';
+import 'package:evertecine/ui/viewModel/home_state.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart';
 
 class Homeviewmodel extends ChangeNotifier {
   final UpcomingMoviesRepository repository;
-  HomeState homeState = HomeState();
+  HomeState _state = HomeState();
+
+  HomeState get state => _state;
 
   Homeviewmodel({required this.repository});
 
 
   Future<void> loadUpcomingMovies() async {
-    try {
-      BaseNetworkResponse<Movie> response = await repository.getUpcomingMovies();
+    if (_state.paging) return;
+
+    try {      
+      BaseNetworkResponse<Movie> response = await repository.getUpcomingMovies(page: _state.actualPage);
       if (!response.success) {
-        homeState.errorMessage = response.message ?? "Unknow error";
-        homeState.loading = false;
+       _updateState(_state.copyWith(paging: false, errorMessage: response.message));
         return;
       }
-      homeState.errorMessage = "";
-      homeState.loading = false;
-      homeState.movies = response.results ?? [];
+      final List<Movie> newMovies = response.results ?? [];
+      _updateState(_state.copyWith(paging: false, loading: false, movies: [..._state.movies,...newMovies], actualPage: _state.actualPage + 1));
 
     } catch(e) {
-      homeState.errorMessage = e.toString();
-      homeState.loading = false;
-    } finally {
-      notifyListeners();
+      _updateState(_state.copyWith(paging: false, errorMessage: e.toString()));
     }
   }
 
-  bool isLoadingData() {
-    return homeState.loading;
-  }
+  void _updateState(HomeState newState) {
+    _state = newState;
+    notifyListeners();
 
-  List<Movie> getMovieList() {
-    return homeState.movies;
   }
-}
-
-class HomeState {
-  List<Movie> movies = [];
-  bool loading = true;
-  String errorMessage = "";
 }

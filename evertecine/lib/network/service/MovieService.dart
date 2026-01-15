@@ -9,8 +9,9 @@ class MoviesRepository implements UpcomingMoviesRepository {
   final String _baseUrl = 'https://api.themoviedb.org/3';
   final String _apiKey = '';
 
-  Future<BaseNetworkResponse<Movie>> getUpcomingMovies() async {
-    final url = Uri.parse('$_baseUrl/movie/upcoming?api_key=$_apiKey&language=pt-BR&page=1');
+  @override
+  Future<BaseNetworkResponse<Movie>> getUpcomingMovies({int page = 1}) async {
+    final url = Uri.parse('$_baseUrl/movie/upcoming?api_key=$_apiKey&language=pt-BR&page=$page');
 
     try {
       final response = await http.get(url);

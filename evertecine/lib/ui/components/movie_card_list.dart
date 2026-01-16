@@ -48,7 +48,7 @@ class MovieCardList extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    movie.genreIds[1].toString(),
+                    "aba daba du",
                     style: TextStyle(color: Colors.grey[600]),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

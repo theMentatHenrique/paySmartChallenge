@@ -11,7 +11,7 @@ class AppRouter {
       GoRoute(
         path: '/',
         builder: (context, state) => ChangeNotifierProvider(
-          create: (_) => Homeviewmodel(repository: MoviesRepository())..loadUpcomingMovies(),
+          create: (_) => HomeViewmodel(repository: MoviesRepository()),
           child: const HomeScreen(),
         ),
       ),

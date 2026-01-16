@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/model/Movie.dart';
 
@@ -11,6 +12,15 @@ class MovieCardList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return InkWell(
+      child: CardContent(),
+      onTap: () {
+        context.push('/details', extra: movie);
+      },
+    );
+  }
+
+  Widget CardContent() {
     return Card(
       color: Colors.blue,
       elevation: 4,
@@ -25,12 +35,12 @@ class MovieCardList extends StatelessWidget {
             AspectRatio(
               aspectRatio:  1,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  _IMAGE_URL + movie.posterImage,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
-                )
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    _IMAGE_URL + movie.posterImage,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+                  )
               ),
             ),
             const SizedBox(width: 16),
@@ -48,7 +58,7 @@ class MovieCardList extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "aba daba du",
+                    movie.genres[0],
                     style: TextStyle(color: Colors.grey[600]),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -67,8 +77,6 @@ class MovieCardList extends StatelessWidget {
         color: Colors.red,
       ),
     );
-
   }
-
 
 }

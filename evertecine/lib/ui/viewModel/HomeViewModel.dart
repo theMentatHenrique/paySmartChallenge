@@ -7,8 +7,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 class HomeViewmodel extends ChangeNotifier {
   final UpcomingMoviesRepository _repository;
 
-  HomeViewmodel({required UpcomingMoviesRepository repository})
-      : _repository = repository;
+  HomeViewmodel({required MoviesRepository repository}) : _repository = repository;
 
 
   Future<void> loadUpcomingMovies(int pageKey, PagingController<int, Movie> pagingController) async {
@@ -23,10 +22,9 @@ class HomeViewmodel extends ChangeNotifier {
 
       if (isLastPage) {
         pagingController.appendLastPage(newMovies);
-      } else {
-        pagingController.appendPage(newMovies, pageKey + 1);
+        return;
       }
-
+      pagingController.appendPage(newMovies, pageKey + 1);
     } catch(e) {
       pagingController.error = e.toString();
     }

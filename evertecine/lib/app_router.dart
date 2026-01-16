@@ -1,4 +1,6 @@
+import 'package:evertecine/domain/model/Movie.dart';
 import 'package:evertecine/network/service/MovieService.dart';
+import 'package:evertecine/ui/screen/detail/detail_screen.dart';
 import 'package:evertecine/ui/screen/home/homeScreen.dart';
 import 'package:evertecine/ui/viewModel/HomeViewModel.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +17,10 @@ class AppRouter {
           child: const HomeScreen(),
         ),
       ),
+      GoRoute(path: '/details',
+          builder: (context, state) {
+          return DetailScreen(movie: state.extra as Movie);
+      })
     ],
   );
 }

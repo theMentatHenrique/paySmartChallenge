@@ -11,15 +11,16 @@ class NetworkMoviesRepositoryImpl implements Inetworkmovierepository {
   final String _apiKey = 'df6f065db6e892ecbc291c2ecb07fe13';
   Map<int, String> _genres = {};
 
+  NetworkMoviesRepositoryImpl() {
+    // first time load genres
+    initializeGenres();
+  }
+
   @override
   Future<BaseNetworkResponse<Movie>> getUpcomingMovies({int page = 1}) async {
     final url = Uri.parse('$_baseUrl/movie/upcoming?api_key=$_apiKey&language=pt-BR&page=$page');
 
     try {
-      // first time load genres
-      if (_genres.isEmpty) {
-        await initializeGenres();
-      }
       final response = await http.get(url);
 
       if (response.statusCode != 200) {
@@ -52,7 +53,6 @@ class NetworkMoviesRepositoryImpl implements Inetworkmovierepository {
       };
     } catch(e) {
       print(e.toString());
-
     }
   }
 

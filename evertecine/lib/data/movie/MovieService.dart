@@ -51,10 +51,6 @@ class MovieService {
   }
 
   Future<BaseNetworkResponse<Movie>> searchMovieByName(String value) async {
-    final localResponse = await _localRepo.searchMovieByName(value);
-    if (localResponse.success && localResponse.results!.isNotEmpty) {
-      return localResponse;
-    }
     return _networkRepo.searchMovieByName(value);
   }
 

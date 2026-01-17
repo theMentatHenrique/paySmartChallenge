@@ -58,7 +58,7 @@ class MovieCardItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    movie.genres[0],
+                    movie.genres[0] ?? 'Unknow',
                     style: TextStyle(color: Colors.grey[600]),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

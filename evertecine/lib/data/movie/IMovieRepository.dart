@@ -5,6 +5,5 @@ import '../../domain/model/Movie.dart';
 
 abstract class IMovieRepository {
   Future<BaseNetworkResponse<Movie>> getUpcomingMovies({int page = 1});
-  Future<BaseNetworkResponse<Movie>> searchMovieByName(String value);
 }
 

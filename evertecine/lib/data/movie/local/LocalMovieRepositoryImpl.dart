@@ -40,26 +40,4 @@ class LocalMovieRepositoryImpl implements ILocalMovieRepository {
       results: movies,
     );
   }
-
-  @override
-  Future<BaseNetworkResponse<Movie>> searchMovieByName(String value) async {
-    final db = await _dataBase.database;
-    if (!db.isOpen) return BaseNetworkResponse(success: false, message: "DATABASE IS CLOSED", statusCode: 500);
-
-    final List<Map<String, dynamic>> maps = await db.query(
-      'movie',
-      where: 'title LIKE ?',
-      whereArgs: ['%$value%'],
-    );
-
-    if (maps.isEmpty) return BaseNetworkResponse(success: false, message: "DATABASE return nothing", statusCode: 204);
-
-    final movies = maps.map((m) => Movie.fromMap(m)).toList();
-    if (movies.isEmpty) return BaseNetworkResponse(success: false, message: "No movies find", statusCode: 204);
-    return BaseNetworkResponse<Movie>(
-      success: true,
-      statusCode: 200,
-      results: movies,
-    );
-  }
 }

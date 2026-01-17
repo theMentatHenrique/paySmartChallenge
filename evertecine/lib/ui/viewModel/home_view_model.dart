@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:evertecine/data/movie/MovieService.dart';
-import 'package:evertecine/domain/model/Movie.dart';
-import 'package:evertecine/data/movie/IMovieRepository.dart';
-import 'package:evertecine/data/movie/network/NetworkMoviesRepositoryImpl.dart';
+import 'package:evertecine/data/movie/movie_service.dart';
+import 'package:evertecine/domain/model/movie.dart';
+import 'package:evertecine/data/movie/i_movie_repository.dart';
+import 'package:evertecine/data/movie/network/network_movies_repository_impl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 

@@ -1,10 +1,10 @@
-import 'package:evertecine/data/movie/IMovieRepository.dart';
-import 'package:evertecine/data/movie/local/ILocalMovieRepository.dart';
-import 'package:evertecine/data/movie/network/INetworkMovieRepository.dart';
+import 'package:evertecine/data/movie/i_movie_repository.dart';
+import 'package:evertecine/data/movie/local/i_local_movie_repository.dart';
+import 'package:evertecine/data/movie/network/i_network_movie_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../domain/model/Movie.dart';
-import '../../network/core/BaseNetworkResponse.dart';
+import '../../domain/model/movie.dart';
+import '../../network/core/base_network_response.dart';
 
 class MovieService {
   final ILocalMovieRepository _localRepo;
@@ -20,7 +20,7 @@ class MovieService {
         _networkRepo = networkRepo, 
         _prefs = prefs;
   
-  Future<BaseNetworkResponse<Movie>> getUpcomingMovies(int page) async {
+  Future<BaseAPIResponse<Movie>> getUpcomingMovies(int page) async {
     try {
       final actualPage = _prefs.getInt('page') ?? 0;
       if (_refreshLocalDataBase() || page > 1) {
@@ -28,7 +28,7 @@ class MovieService {
       }
       return await _localRepo.getUpcomingMovies();
     } catch (e) {
-      return BaseNetworkResponse(success: false, message: e.toString());
+      return BaseAPIResponse(success: false, message: e.toString());
     }
   }
 
@@ -48,7 +48,7 @@ class MovieService {
     _prefs.setInt('page', actualPage + 1);
   }
 
-  Future<BaseNetworkResponse<Movie>> searchMovieByName(String value) async {
+  Future<BaseAPIResponse<Movie>> searchMovieByName(String value) async {
     return _networkRepo.searchMovieByName(value);
   }
 

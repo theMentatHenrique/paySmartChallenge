@@ -1,10 +1,10 @@
-import 'package:evertecine/data/movie/MovieService.dart';
-import 'package:evertecine/data/movie/local/LocalMovieRepositoryImpl.dart';
-import 'package:evertecine/domain/model/Movie.dart';
-import 'package:evertecine/data/movie/network/NetworkMoviesRepositoryImpl.dart';
+import 'package:evertecine/data/movie/movie_service.dart';
+import 'package:evertecine/data/movie/local/local_movie_repository_impl.dart';
+import 'package:evertecine/domain/model/movie.dart';
+import 'package:evertecine/data/movie/network/network_movies_repository_impl.dart';
 import 'package:evertecine/ui/screen/detail/detail_screen.dart';
-import 'package:evertecine/ui/screen/home/homeScreen.dart';
-import 'package:evertecine/ui/viewModel/HomeViewModel.dart';
+import 'package:evertecine/ui/screen/home/home_screen.dart';
+import 'package:evertecine/ui/viewModel/home_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

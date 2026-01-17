@@ -1,7 +1,7 @@
 import 'package:evertecine/ui/components/movie_search_list.dart';
 import 'package:evertecine/ui/components/styles.dart';
 import 'package:evertecine/ui/screen/home/movie_list.dart';
-import 'package:evertecine/ui/viewModel/HomeViewModel.dart';
+import 'package:evertecine/ui/viewModel/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

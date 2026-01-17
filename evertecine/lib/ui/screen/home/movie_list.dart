@@ -1,9 +1,9 @@
-import 'package:evertecine/ui/viewModel/HomeViewModel.dart';
+import 'package:evertecine/ui/viewModel/home_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
-import '../../../domain/model/Movie.dart';
+import '../../../domain/model/movie.dart';
 import '../../components/movie_card_item.dart';
 
 class MovieList extends StatefulWidget {

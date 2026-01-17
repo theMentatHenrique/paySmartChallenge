@@ -1,8 +1,7 @@
-import 'package:evertecine/domain/model/Movie.dart';
+import 'package:evertecine/domain/model/movie.dart';
 import 'package:evertecine/ui/components/movie_card_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../components/styles.dart';
 
 class DetailScreen extends StatelessWidget {

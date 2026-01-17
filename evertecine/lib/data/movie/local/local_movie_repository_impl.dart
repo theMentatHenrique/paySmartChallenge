@@ -1,7 +1,7 @@
-import 'package:evertecine/data/movie/local/ILocalMovieRepository.dart';
-import 'package:evertecine/data/movie/local/MovieDatabaseFactory.dart';
-import 'package:evertecine/domain/model/Movie.dart';
-import 'package:evertecine/network/core/BaseNetworkResponse.dart';
+import 'package:evertecine/data/movie/local/i_local_movie_repository.dart';
+import 'package:evertecine/data/movie/local/movie_database_factory.dart';
+import 'package:evertecine/domain/model/movie.dart';
+import 'package:evertecine/network/core/base_network_response.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LocalMovieRepositoryImpl implements ILocalMovieRepository {
@@ -24,25 +24,25 @@ class LocalMovieRepositoryImpl implements ILocalMovieRepository {
   }
 
   @override
-  Future<BaseNetworkResponse<Movie>> getUpcomingMovies({int page = 1}) async {
+  Future<BaseAPIResponse<Movie>> getUpcomingMovies({int page = 1}) async {
     try {
       final db = await _dataBase.database;
-      if (!db.isOpen) return BaseNetworkResponse(success: false, message: "DATABASE IS CLOSED", statusCode: 500);
+      if (!db.isOpen) return BaseAPIResponse(success: false, message: "DATABASE IS CLOSED", statusCode: 500);
 
       final List<Map<String, dynamic>> maps = await db.rawQuery('''
         SELECT * FROM movie ORDER BY id DESC LIMIT 20  ''');
-      if (maps.isEmpty) return BaseNetworkResponse(success: false, message: "DATABASE return nothing", statusCode: 204);
+      if (maps.isEmpty) return BaseAPIResponse(success: false, message: "DATABASE return nothing", statusCode: 204);
 
       final movies = maps.map((m) => Movie.fromLocalDataBase(m)).toList().reversed.toList();
-      if (movies.isEmpty) return BaseNetworkResponse(success: false, message: "No movies found", statusCode: 204);
+      if (movies.isEmpty) return BaseAPIResponse(success: false, message: "No movies found", statusCode: 204);
 
-      return BaseNetworkResponse<Movie>(
+      return BaseAPIResponse<Movie>(
         success: true,
         statusCode: 200,
         results: movies,
       );
     } catch(e) {
-      return BaseNetworkResponse(success: false, message: e.toString());
+      return BaseAPIResponse(success: false, message: e.toString());
     }
 
   }

@@ -1,6 +1,6 @@
-import 'package:evertecine/domain/model/Movie.dart';
+import 'package:evertecine/domain/model/movie.dart';
 import 'package:evertecine/ui/components/movie_card_item.dart';
-import 'package:evertecine/ui/viewModel/HomeViewModel.dart';
+import 'package:evertecine/ui/viewModel/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';

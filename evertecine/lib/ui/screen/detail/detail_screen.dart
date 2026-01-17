@@ -11,7 +11,7 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.red, title: Text(movie.name)),
+      appBar: AppBar(backgroundColor: Colors.red, title: Text(movie.title)),
       body: CenterContent(),
     );
   }
@@ -23,7 +23,7 @@ class DetailScreen extends StatelessWidget {
       aspectRatio:  1,
       child: ClipRRect(
           child: Image.network(
-            _IMAGE_URL + movie.posterImage,
+            _IMAGE_URL + movie.posterPath,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
           )
@@ -35,7 +35,7 @@ class DetailScreen extends StatelessWidget {
     return Column(
       children: [
         CardImage(),
-        Text(movie.overView),
+        Text(movie.overview),
         Text(movie.allGenres()),
         Text(movie.releaseDate),
       ],

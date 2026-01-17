@@ -1,13 +1,14 @@
 import 'dart:async';
 
+import 'package:evertecine/data/movie/MovieService.dart';
 import 'package:evertecine/domain/model/Movie.dart';
-import 'package:evertecine/data/movie/ImovieRepository.dart';
-import 'package:evertecine/data/movie/MoviesRepository.dart';
+import 'package:evertecine/data/movie/IMovieRepository.dart';
+import 'package:evertecine/data/movie/network/NetworkMoviesRepositoryImpl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HomeViewmodel extends ChangeNotifier {
-  final IMovieRepository _repository;
+  final MovieService _service;
 
   bool _searching = false;
   bool get searching => _searching ;
@@ -18,12 +19,12 @@ class HomeViewmodel extends ChangeNotifier {
 
   Timer? _debounce;
 
-  HomeViewmodel({required MoviesRepository repository}) : _repository = repository;
+  HomeViewmodel({required MovieService repository}) : _service = repository;
 
 
   Future<void> loadUpcomingMovies(int pageKey, PagingController<int, Movie> pagingController) async {
     try {
-      final response = await _repository.getUpcomingMovies(page: pageKey);
+      final response = await _service.getUpcomingMovies(page: pageKey);
       if (!response.success) {
         pagingController.error = response.message;
         return;
@@ -58,7 +59,7 @@ class HomeViewmodel extends ChangeNotifier {
   }
 
   void refreshMovieList(String value) async {
-    final response = await _repository.searchMovieByName(value);
+    final response = await _service.searchMovieByName(value);
     if (!response.success) return;
 
     _movies = response.results ?? [];

@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:evertecine/data/movie/network/INetworkMovieRepository.dart';
 import 'package:evertecine/domain/model/Movie.dart';
-import 'package:evertecine/data/movie/ImovieRepository.dart';
+import 'package:evertecine/data/movie/IMovieRepository.dart';
 import 'package:http/http.dart' as http;
 
-import '../../network/core/BaseNetworkResponse.dart';
+import '../../../network/core/BaseNetworkResponse.dart';
 
-class MoviesRepository implements IMovieRepository {
+class NetworkMoviesRepositoryImpl implements Inetworkmovierepository {
   final String _baseUrl = 'https://api.themoviedb.org/3';
   final String _apiKey = 'df6f065db6e892ecbc291c2ecb07fe13';
   Map<int, String> _genres = {};

@@ -37,7 +37,7 @@ class MovieCardItem extends StatelessWidget {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
-                    _IMAGE_URL + movie.posterImage,
+                    _IMAGE_URL + movie.posterPath,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
                   )
@@ -51,7 +51,7 @@ class MovieCardItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    movie.name,
+                    movie.title,
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

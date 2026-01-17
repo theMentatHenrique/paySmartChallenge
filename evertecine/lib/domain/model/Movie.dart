@@ -1,5 +1,5 @@
 class Movie {
-  final int id;
+  final int id_tmdb;
   final String title;
   final String posterPath;
   final List<String> genres;
@@ -7,7 +7,7 @@ class Movie {
   final String releaseDate;
 
   Movie({
-    required this.id,
+    required this.id_tmdb,
     required this.title,
     required this.posterPath,
     required this.genres,
@@ -15,9 +15,9 @@ class Movie {
     required this.releaseDate,
   });
 
-  factory Movie.fromJson(Map<String, dynamic> json, Map<int, String> allGenres) {
+  factory Movie.fromNetwork(Map<String, dynamic> json, Map<int, String> allGenres) {
     return Movie(
-      id: json['id'] ?? 0,
+      id_tmdb: json['id'] ?? 0,
       title: json['title'] ?? '',
       posterPath: json['poster_path'] ?? '',
       genres: convertGenres(allGenres, List<int>.from(json['genre_ids'] ?? [])),
@@ -40,7 +40,7 @@ class Movie {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'id_tmdb' : id_tmdb,
       'title': title,
       'overview': overview,
       'poster_path': posterPath,
@@ -49,9 +49,9 @@ class Movie {
     };
   }
 
-  factory Movie.fromMap(Map<String, dynamic> map) {
+  factory Movie.fromLocalDataBase(Map<String, dynamic> map) {
     return Movie(
-      id: map['id'],
+      id_tmdb: map['id_tmdb'],
       title: map['title'],
       overview: map['overview'],
       posterPath: map['poster_path'],

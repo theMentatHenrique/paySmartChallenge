@@ -1,4 +1,5 @@
 import 'package:evertecine/ui/components/movie_search_list.dart';
+import 'package:evertecine/ui/components/styles.dart';
 import 'package:evertecine/ui/screen/home/movie_list.dart';
 import 'package:evertecine/ui/viewModel/HomeViewModel.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,9 @@ class HomeScreen extends StatelessWidget {
     final viewModel = context.watch<HomeViewmodel>();
 
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
+        backgroundColor:AppColors.background,
         title: _customSearchTextField(viewModel.searchMovie),
       ),
       body: viewModel.searching ? MovieSearchList() : MovieList(),
@@ -22,12 +25,33 @@ class HomeScreen extends StatelessWidget {
   Widget _customSearchTextField(void Function(String) onChange) {
     return TextField(
       onChanged: onChange,
-      decoration: const InputDecoration(
+      style: AppTextStyles.body.copyWith(color: AppColors.textPrimary),
+      cursorColor: AppColors.primary,
+      decoration: InputDecoration(
         hintText: 'Search movies...',
-        border: InputBorder.none,
-        hintStyle: TextStyle(color: Colors.white54),
+        hintStyle: AppTextStyles.body,
+        filled: true,
+        fillColor: AppColors.surface,
+        prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
+
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide(
+            color: AppColors.primary.withOpacity(0.5),
+            width: 1.0,
+          ),
+        ),
+
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: const BorderSide(
+            color: AppColors.primary,
+            width: 2.0,
+          ),
+        ),
+
+        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       ),
-      style: const TextStyle(color: Colors.white),
     );
   }
 }

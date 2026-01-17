@@ -28,7 +28,8 @@ class MovieDatabaseFactory {
   Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE movie (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_tmdb INTEGER UNIQUE,
         title TEXT NOT NULL,
         poster_path TEXT,
         overview TEXT NOT NULL,

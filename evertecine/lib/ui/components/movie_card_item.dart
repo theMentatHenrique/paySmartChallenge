@@ -1,6 +1,8 @@
+import 'package:evertecine/ui/components/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:path/path.dart';
 
 import '../../domain/model/Movie.dart';
 
@@ -24,18 +26,17 @@ class MovieCardItem extends StatelessWidget {
     return Card(
       color: Colors.blue,
       elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       clipBehavior: Clip.antiAlias,
       child: Container(
         height: 120,
-        padding: const EdgeInsets.all(8),
         child: Row (
           children: [
             // imagem
             AspectRatio(
               aspectRatio:  1,
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(4),
                   child: Image.network(
                     _IMAGE_URL + movie.posterPath,
                     fit: BoxFit.cover,
@@ -43,7 +44,7 @@ class MovieCardItem extends StatelessWidget {
                   )
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             // texts
             Expanded(
               child: Column(
@@ -52,20 +53,20 @@ class MovieCardItem extends StatelessWidget {
                 children: [
                   Text(
                     movie.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: AppTextStyles.titleMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    movie.genres[0] ?? 'Unknow',
-                    style: TextStyle(color: Colors.grey[600]),
+                    movie.genres.isEmpty ? 'Unknow' : movie.genres[0],
+                    style: AppTextStyles.CategoryTitle,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     movie.releaseDate,
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: AppTextStyles.body,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -74,7 +75,7 @@ class MovieCardItem extends StatelessWidget {
             )
           ],
         ),
-        color: Colors.red,
+        color: AppColors.surface,
       ),
     );
   }

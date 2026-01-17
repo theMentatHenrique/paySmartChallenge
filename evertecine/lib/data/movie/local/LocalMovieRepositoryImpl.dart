@@ -8,7 +8,7 @@ class LocalMovieRepositoryImpl implements ILocalMovieRepository {
   final MovieDatabaseFactory _dataBase = MovieDatabaseFactory.instance;
 
   @override
-  void insert(List<Movie> movies) async {
+  Future<void> insert(List<Movie> movies) async {
     final db = await _dataBase.database;
     final batch = db.batch();
 
@@ -25,19 +25,26 @@ class LocalMovieRepositoryImpl implements ILocalMovieRepository {
 
   @override
   Future<BaseNetworkResponse<Movie>> getUpcomingMovies({int page = 1}) async {
-    final db = await _dataBase.database;
-    if (!db.isOpen) return BaseNetworkResponse(success: false, message: "DATABASE IS CLOSED", statusCode: 500);
+    try {
+      final db = await _dataBase.database;
+      if (!db.isOpen) return BaseNetworkResponse(success: false, message: "DATABASE IS CLOSED", statusCode: 500);
 
-    final List<Map<String, dynamic>> maps = await db.query('movie');
-    if (maps.isEmpty) return BaseNetworkResponse(success: false, message: "DATABASE return nothing", statusCode: 204);
+      final List<Map<String, dynamic>> maps = await db.rawQuery('''
+        SELECT * FROM movie ORDER BY id DESC LIMIT 20  ''');
 
-    final movies = maps.map((m) => Movie.fromMap(m)).toList();
-    if (movies.isEmpty) return BaseNetworkResponse(success: false, message: "No movies found", statusCode: 204);
+      if (maps.isEmpty) return BaseNetworkResponse(success: false, message: "DATABASE return nothing", statusCode: 204);
 
-    return BaseNetworkResponse<Movie>(
-      success: true,
-      statusCode: 200,
-      results: movies,
-    );
+      final movies = maps.map((m) => Movie.fromLocalDataBase(m)).toList().reversed.toList();
+      if (movies.isEmpty) return BaseNetworkResponse(success: false, message: "No movies found", statusCode: 204);
+
+      return BaseNetworkResponse<Movie>(
+        success: true,
+        statusCode: 200,
+        results: movies,
+      );
+    } catch(e) {
+      return BaseNetworkResponse(success: false, message: e.toString());
+    }
+
   }
 }

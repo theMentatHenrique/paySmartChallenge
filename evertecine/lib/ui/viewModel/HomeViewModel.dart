@@ -24,7 +24,7 @@ class HomeViewmodel extends ChangeNotifier {
 
   Future<void> loadUpcomingMovies(int pageKey, PagingController<int, Movie> pagingController) async {
     try {
-      final response = await _service.getUpcomingMovies(page: pageKey);
+      final response = await _service.getUpcomingMovies(pageKey);
       if (!response.success) {
         pagingController.error = response.message;
         return;

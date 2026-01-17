@@ -29,7 +29,7 @@ class NetworkMoviesRepositoryImpl implements Inetworkmovierepository {
       final Map<String, dynamic> data = json.decode(response.body);
       final List<dynamic> results = data['results'];
 
-      final List<Movie> movies = results.map((item) => Movie.fromJson(item, _genres)).toList();
+      final List<Movie> movies = results.map((item) => Movie.fromNetwork(item, _genres)).toList();
       if (movies.isEmpty) return BaseNetworkResponse(success: false, message: "Empty movies list");
       return BaseNetworkResponse(success: true, results: movies, statusCode: 200);
     } catch (e) {
@@ -68,7 +68,7 @@ class NetworkMoviesRepositoryImpl implements Inetworkmovierepository {
       final Map<String, dynamic> data = json.decode(response.body);
       final List<dynamic> results = data['results'];
 
-      final List<Movie> movies = results.map((item) => Movie.fromJson(item, _genres)).toList();
+      final List<Movie> movies = results.map((item) => Movie.fromNetwork(item, _genres)).toList();
       if (movies.isEmpty) return BaseNetworkResponse(success: false, message: "Empty movies list");
       return BaseNetworkResponse(success: true, results: movies, statusCode: 200);
     } catch (e) {

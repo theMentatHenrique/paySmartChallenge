@@ -16,8 +16,6 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-
-
   Widget CardImage() {
     return AspectRatio(
       aspectRatio:  1,

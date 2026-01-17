@@ -20,38 +20,42 @@ class MovieService {
         _networkRepo = networkRepo, 
         _prefs = prefs;
   
-  Future<BaseNetworkResponse<Movie>> getUpcomingMovies({int page = 1}) async {
+  Future<BaseNetworkResponse<Movie>> getUpcomingMovies(int page) async {
     try {
-      if (_useLocalData(page: page)) {
-        return _localRepo.getUpcomingMovies(page: page);
+      final actualPage = _prefs.getInt('page') ?? 0;
+      if (_refreshLocalDataBase() || page > 1) {
+        await _updateLocalDataBase(actualPage + 1);
       }
-      _prefs.setInt('page', page);
-      final BaseNetworkResponse<Movie> responseNetwork = await _networkRepo.getUpcomingMovies(page: page);
-      if (responseNetwork.success && responseNetwork.results != []) {
-        _updateLocalStorage(responseNetwork.results);
-      }
-      return responseNetwork;
+      return await _localRepo.getUpcomingMovies();
     } catch (e) {
       return BaseNetworkResponse(success: false, message: e.toString());
     }
   }
 
-  bool _useLocalData({int page = 1}) {
+  bool _refreshLocalDataBase() {
     final actualPage = _prefs.getInt('page') ?? 0;
     final lastUpdate = _prefs.getInt('last_update') ?? 0;
     final actualMoment = DateTime.now().millisecondsSinceEpoch;
     bool refresh = (actualMoment - lastUpdate) >  5 * 60 * 60 * 1000; // 5 hours in milliseconds
-    return !refresh && actualPage >= page;
+    return refresh || actualPage == 0;
   }
 
-  void _updateLocalStorage(List<Movie>? results) {
+  Future<void> _addNewMovies(List<Movie>? results) async {
     if (results!.isEmpty) return;
     _localRepo.insert(results);
     _prefs.setInt('last_update', DateTime.now().millisecondsSinceEpoch);
+    final int actualPage = _prefs.getInt('page') ?? 0;
+    _prefs.setInt('page', actualPage + 1);
   }
 
   Future<BaseNetworkResponse<Movie>> searchMovieByName(String value) async {
     return _networkRepo.searchMovieByName(value);
+  }
+
+  Future<void> _updateLocalDataBase(int page) async {
+    final response = await _networkRepo.getUpcomingMovies(page: page);
+    if (!response.success || response.results!.isEmpty) return;
+    _addNewMovies(response.results);
   }
 
 }

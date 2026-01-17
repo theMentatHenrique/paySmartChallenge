@@ -4,11 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/model/Movie.dart';
 
-class MovieCardList extends StatelessWidget {
+class MovieCardItem extends StatelessWidget {
   final Movie movie;
   static final _IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
-  MovieCardList({required this.movie});
+  MovieCardItem({required this.movie});
 
   @override
   Widget build(BuildContext context) {

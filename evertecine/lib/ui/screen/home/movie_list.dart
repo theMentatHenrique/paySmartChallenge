@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import '../../../domain/model/Movie.dart';
-import '../../components/movie_card_list.dart';
+import '../../components/movie_card_item.dart';
 
 class MovieList extends StatefulWidget {
   const MovieList({super.key});
@@ -37,7 +37,7 @@ class _MovieListState extends State<MovieList> {
         pagingController: _pagingController,
         separatorBuilder: (context, index) => const Divider(),
         builderDelegate: PagedChildBuilderDelegate<Movie>(
-            itemBuilder: (context, movie, index) => MovieCardList(movie: movie),
+            itemBuilder: (context, movie, index) => MovieCardItem(movie: movie),
             firstPageProgressIndicatorBuilder: (_) => const Center(
               child: CircularProgressIndicator(),
             ),

@@ -1,11 +1,22 @@
+import 'dart:async';
+
 import 'package:evertecine/domain/model/Movie.dart';
-import 'package:evertecine/domain/repository/CatalogRepository.dart';
-import 'package:evertecine/network/service/MovieService.dart';
+import 'package:evertecine/data/movie/ImovieRepository.dart';
+import 'package:evertecine/data/movie/MoviesRepository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HomeViewmodel extends ChangeNotifier {
-  final UpcomingMoviesRepository _repository;
+  final IMovieRepository _repository;
+
+  bool _searching = false;
+  bool get searching => _searching ;
+
+  List<Movie> _movies = [];
+  List<Movie> get movies => _movies;
+
+
+  Timer? _debounce;
 
   HomeViewmodel({required MoviesRepository repository}) : _repository = repository;
 
@@ -28,6 +39,31 @@ class HomeViewmodel extends ChangeNotifier {
     } catch(e) {
       pagingController.error = e.toString();
     }
+  }
+
+  void searchMovie(String value) {
+    if (value.isEmpty) {
+      _searching = false;
+      notifyListeners();
+    }
+    _debounce?.cancel();
+    if (value.length >= 3) {
+      _debounce?.cancel();
+      _debounce = Timer(const Duration(milliseconds: 800), () async {
+        refreshMovieList(value);
+      });
+
+    }
 
   }
+
+  void refreshMovieList(String value) async {
+    final response = await _repository.searchMovieByName(value);
+    if (!response.success) return;
+
+    _movies = response.results ?? [];
+    _searching = true;
+    notifyListeners();
+  }
+
 }

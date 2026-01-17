@@ -1,5 +1,5 @@
 import 'package:evertecine/domain/model/Movie.dart';
-import 'package:evertecine/network/service/MovieService.dart';
+import 'package:evertecine/data/movie/MoviesRepository.dart';
 import 'package:evertecine/ui/screen/detail/detail_screen.dart';
 import 'package:evertecine/ui/screen/home/homeScreen.dart';
 import 'package:evertecine/ui/viewModel/HomeViewModel.dart';

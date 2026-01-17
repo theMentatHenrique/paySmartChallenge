@@ -1,42 +1,74 @@
 import 'package:evertecine/domain/model/Movie.dart';
+import 'package:evertecine/ui/components/movie_card_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/styles.dart';
+
 class DetailScreen extends StatelessWidget {
-  static final _IMAGE_URL = "https://image.tmdb.org/t/p/w500";
   final Movie movie;
 
-  const DetailScreen({super.key, required this.movie});
+  DetailScreen({required this.movie});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.red, title: Text(movie.title)),
-      body: CenterContent(),
-    );
-  }
+      backgroundColor: AppColors.background,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 400,
+            pinned: true,
+            backgroundColor: AppColors.background,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.network(MovieCardItem.IMAGE_URL + movie.posterPath, fit: BoxFit.cover),
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.transparent, AppColors.background],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
 
-  Widget CardImage() {
-    return AspectRatio(
-      aspectRatio:  1,
-      child: ClipRRect(
-          child: Image.network(
-            _IMAGE_URL + movie.posterPath,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
-          )
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(movie.title, style: AppTextStyles.titleMain),
+                  const SizedBox(height: 32),
+                  Text(movie.releaseDate, style: AppTextStyles.body.copyWith(fontSize: 20)),
+                  const SizedBox(height: 12),
+                  Text(
+                    movie.overview,
+                    style: AppTextStyles.titleMain,
+                  ),
+
+                  const SizedBox(height: 32),
+                  Wrap(
+                    spacing: 8,
+                    children: movie.genres.toList().map((genre) => Chip(
+                      backgroundColor: AppColors.surface,
+                      label: Text(genre, style: const TextStyle(color: Colors.white, fontSize: 12)),
+                      side: BorderSide(color: AppColors.primary.withOpacity(0.3)),
+                    )).toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-    );
-  }
-
-  Widget CenterContent() {
-    return Column(
-      children: [
-        CardImage(),
-        Text(movie.overview),
-        Text(movie.allGenres()),
-        Text(movie.releaseDate),
-      ],
     );
   }
 }

@@ -2,13 +2,11 @@ import 'package:evertecine/ui/components/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:path/path.dart';
-
 import '../../domain/model/Movie.dart';
 
 class MovieCardItem extends StatelessWidget {
   final Movie movie;
-  static final _IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+  static final IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
   MovieCardItem({required this.movie});
 
@@ -38,7 +36,7 @@ class MovieCardItem extends StatelessWidget {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),
                   child: Image.network(
-                    _IMAGE_URL + movie.posterPath,
+                    IMAGE_URL + movie.posterPath,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
                   )

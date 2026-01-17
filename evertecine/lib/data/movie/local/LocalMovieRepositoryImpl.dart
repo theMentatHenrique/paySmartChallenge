@@ -31,7 +31,6 @@ class LocalMovieRepositoryImpl implements ILocalMovieRepository {
 
       final List<Map<String, dynamic>> maps = await db.rawQuery('''
         SELECT * FROM movie ORDER BY id DESC LIMIT 20  ''');
-
       if (maps.isEmpty) return BaseNetworkResponse(success: false, message: "DATABASE return nothing", statusCode: 204);
 
       final movies = maps.map((m) => Movie.fromLocalDataBase(m)).toList().reversed.toList();

@@ -17,7 +17,7 @@ class AppTextStyles {
     letterSpacing: -0.5,
   );
 
-  static const TextStyle CategoryTitle = TextStyle(
+  static const TextStyle categoryTitle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: AppColors.primary,

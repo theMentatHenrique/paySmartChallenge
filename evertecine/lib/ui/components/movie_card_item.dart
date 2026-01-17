@@ -1,26 +1,25 @@
 import 'package:evertecine/ui/components/styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../domain/model/movie.dart';
 
 class MovieCardItem extends StatelessWidget {
   final Movie movie;
-  static final IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+  static final imageUrl = "https://image.tmdb.org/t/p/w500";
 
-  MovieCardItem({required this.movie});
+  const MovieCardItem({required this.movie, super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: CardContent(),
+      child: cardContainer(),
       onTap: () {
         context.push('/details', extra: movie);
       },
     );
   }
 
-  Widget CardContent() {
+  Widget cardContainer() {
     return Card(
       color: Colors.blue,
       elevation: 4,
@@ -28,18 +27,20 @@ class MovieCardItem extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Container(
         height: 120,
-        child: Row (
+        color: AppColors.surface,
+        child: Row(
           children: [
             // imagem
             AspectRatio(
-              aspectRatio:  1,
+              aspectRatio: 1,
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: Image.network(
-                    IMAGE_URL + movie.posterPath,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
-                  )
+                borderRadius: BorderRadius.circular(4),
+                child: Image.network(
+                  imageUrl + movie.posterPath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.broken_image),
+                ),
               ),
             ),
             const SizedBox(width: 8),
@@ -58,7 +59,7 @@ class MovieCardItem extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     movie.genres.isEmpty ? 'Unknow' : movie.genres[0],
-                    style: AppTextStyles.CategoryTitle,
+                    style: AppTextStyles.categoryTitle,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -70,12 +71,10 @@ class MovieCardItem extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
-        color: AppColors.surface,
       ),
     );
   }
-
 }

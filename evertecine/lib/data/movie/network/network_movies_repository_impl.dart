@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:evertecine/data/movie/network/i_network_movie_repository.dart';
 import 'package:evertecine/domain/model/movie.dart';
-import 'package:evertecine/data/movie/i_movie_repository.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../network/core/base_network_response.dart';

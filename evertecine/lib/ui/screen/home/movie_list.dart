@@ -1,5 +1,4 @@
 import 'package:evertecine/ui/viewModel/home_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
@@ -14,14 +13,19 @@ class MovieList extends StatefulWidget {
 }
 
 class _MovieListState extends State<MovieList> {
-  final PagingController<int, Movie> _pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, Movie> _pagingController = PagingController(
+    firstPageKey: 1,
+  );
 
   @override
   void initState() {
     super.initState();
     _pagingController.addPageRequestListener((pageKey) {
-      context.read<HomeViewmodel>().loadUpcomingMovies(pageKey, _pagingController);
-    },);
+      context.read<HomeViewmodel>().loadUpcomingMovies(
+        pageKey,
+        _pagingController,
+      );
+    });
   }
 
   @override
@@ -34,17 +38,21 @@ class _MovieListState extends State<MovieList> {
   @override
   Widget build(BuildContext context) {
     return PagedListView.separated(
-        pagingController: _pagingController,
-        separatorBuilder: (context, index) => const Divider(),
-        builderDelegate: PagedChildBuilderDelegate<Movie>(
-            itemBuilder: (context, movie, index) => MovieCardItem(movie: movie),
-            firstPageProgressIndicatorBuilder: (_) => const Center(
-              child: CircularProgressIndicator(),
-            ),
-          newPageErrorIndicatorBuilder: (_) => const Center(child: Padding(padding: EdgeInsetsGeometry.all(16), child: CircularProgressIndicator(),),),
-          firstPageErrorIndicatorBuilder: (_) => const Center(child: Text('Occours error'),)
+      pagingController: _pagingController,
+      separatorBuilder: (context, index) => const Divider(),
+      builderDelegate: PagedChildBuilderDelegate<Movie>(
+        itemBuilder: (context, movie, index) => MovieCardItem(movie: movie),
+        firstPageProgressIndicatorBuilder: (_) =>
+            const Center(child: CircularProgressIndicator()),
+        newPageErrorIndicatorBuilder: (_) => const Center(
+          child: Padding(
+            padding: EdgeInsetsGeometry.all(16),
+            child: CircularProgressIndicator(),
+          ),
         ),
+        firstPageErrorIndicatorBuilder: (_) =>
+            const Center(child: Text('Occours error')),
+      ),
     );
-
   }
 }

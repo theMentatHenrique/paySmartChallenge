@@ -12,22 +12,31 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppRouter {
   final SharedPreferences _preferences;
 
-  AppRouter({required preferences}) : _preferences = preferences;
+  AppRouter({required SharedPreferences preferences})
+    : _preferences = preferences;
 
-  late final GoRouter  router = GoRouter(
+  late final GoRouter router = GoRouter(
     initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
         builder: (context, state) => ChangeNotifierProvider(
-          create: (_) => HomeViewmodel(repository: MovieService(localRepo: LocalMovieRepositoryImpl(), networkRepo: NetworkMoviesRepositoryImpl(), prefs: _preferences)),
+          create: (_) => HomeViewmodel(
+            repository: MovieService(
+              localRepo: LocalMovieRepositoryImpl(),
+              networkRepo: NetworkMoviesRepositoryImpl(),
+              prefs: _preferences,
+            ),
+          ),
           child: const HomeScreen(),
         ),
       ),
-      GoRoute(path: '/details',
-          builder: (context, state) {
+      GoRoute(
+        path: '/details',
+        builder: (context, state) {
           return DetailScreen(movie: state.extra as Movie);
-      })
+        },
+      ),
     ],
   );
 }

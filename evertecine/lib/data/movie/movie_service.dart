@@ -1,4 +1,3 @@
-import 'package:evertecine/data/movie/i_movie_repository.dart';
 import 'package:evertecine/data/movie/local/i_local_movie_repository.dart';
 import 'package:evertecine/data/movie/network/i_network_movie_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,13 +1,12 @@
 import 'package:evertecine/domain/model/movie.dart';
 import 'package:evertecine/ui/components/movie_card_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../components/styles.dart';
 
 class DetailScreen extends StatelessWidget {
   final Movie movie;
 
-  DetailScreen({required this.movie});
+  const DetailScreen({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,10 @@ class DetailScreen extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.network(MovieCardItem.IMAGE_URL + movie.posterPath, fit: BoxFit.cover),
+                  Image.network(
+                    MovieCardItem.imageUrl + movie.posterPath,
+                    fit: BoxFit.cover,
+                  ),
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -46,21 +48,34 @@ class DetailScreen extends StatelessWidget {
                 children: [
                   Text(movie.title, style: AppTextStyles.titleMain),
                   const SizedBox(height: 32),
-                  Text(movie.releaseDate, style: AppTextStyles.body.copyWith(fontSize: 20)),
-                  const SizedBox(height: 12),
                   Text(
-                    movie.overview,
-                    style: AppTextStyles.titleMain,
+                    movie.releaseDate,
+                    style: AppTextStyles.body.copyWith(fontSize: 20),
                   ),
+                  const SizedBox(height: 12),
+                  Text(movie.overview, style: AppTextStyles.titleMain),
 
                   const SizedBox(height: 32),
                   Wrap(
                     spacing: 8,
-                    children: movie.genres.toList().map((genre) => Chip(
-                      backgroundColor: AppColors.surface,
-                      label: Text(genre, style: const TextStyle(color: Colors.white, fontSize: 12)),
-                      side: BorderSide(color: AppColors.primary.withOpacity(0.3)),
-                    )).toList(),
+                    children: movie.genres
+                        .toList()
+                        .map(
+                          (genre) => Chip(
+                            backgroundColor: AppColors.surface,
+                            label: Text(
+                              genre,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                            side: BorderSide(
+                              color: AppColors.primary.withOpacity(0.3),
+                            ),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ],
               ),
